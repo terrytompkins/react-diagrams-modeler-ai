@@ -1,0 +1,42 @@
+classDiagram
+    class Customer{
+        +int id
+        +string firstName
+        +string lastName
+        +string email
+        +string phone
+    }
+    class Vendor{
+        +int id
+        +string name
+        +string contactPerson
+        +string contactPhone
+        +string contactEmail
+    }
+    class Order{
+        +int id
+        +int customerId
+        +date orderDate
+    }                                                                                                                                                                                                                                                                                                                                                                                                              
+    class OrderLineItem{
+        +int id
+        +int orderId
+        +int productId
+        +int quantity
+        +decimal priceEach
+    }
+    class Product{
+        +int id
+        +int categoryId
+        +string name
+        +decimal price
+    }
+    class ProductCategory{
+        +int id
+        +string name
+    }
+    Customer "1" --> "*" Order : has
+    Order "1" --> "*" OrderLineItem : has
+    ProductCategory "1" --> "*" Product : categorizes
+    Product "1" --> "*" OrderLineItem : contains
+    Vendor "*" --> "*" Product : supplies

@@ -1,0 +1,74 @@
+@startuml
+
+entity "customers" as customers {
+  *customer_id : int
+  --
+  first_name : varchar(50)
+  last_name : varchar(50)
+  email : varchar(100)
+  phone_number : varchar(15)
+  address_line1 : varchar(100)
+  address_line2 : varchar(100)
+  city : varchar(50)
+  state : varchar(50)
+  zip_code : varchar(10)
+  credit_limit : decimal(10,2)
+}
+
+entity "orders" as orders {
+  *order_id : int
+  --
+  order_date : datetime
+  shipping_date : datetime
+  order_status : varchar(20)
+  comments : text
+  customer_id : int
+}
+
+entity "products" as products {
+  *product_code : varchar(20)
+  --
+  product_name : varchar(100)
+  category_id : int
+  vendor_id : int
+  product_description : text
+  quantity_in_stock : int
+  wholesale_price : decimal(10,2)
+  retail_price : decimal(10,2)
+}
+
+entity "product_categories" as product_categories {
+  *category_id : int
+  --
+  description : varchar(200)
+  image : blob
+}
+
+entity "vendors" as vendors {
+  *vendor_id : int
+  --
+  vendor_name : varchar(100)
+  address_line1 : varchar(100)
+  address_line2 : varchar(100)
+  city : varchar(50)
+  state : varchar(50)
+  zip_code : varchar(10)
+  email : varchar(100)
+  phone_number : varchar(15)
+}
+
+entity "order_line_items" as order_line_items {
+  *line_item_id : int
+  --
+  order_id : int
+  product_code : varchar(20)
+  quantity : int
+}
+
+customers ||--o{ orders : has
+orders ||--o{ order_line_items : has
+products ||--o{ order_line_items : has
+product_categories ||--o{ products : has
+vendors ||--o{ products : has
+
+@enduml
